@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Destination {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  ticketPrice Int
+  openHour    String
+  closeHour   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  locationId  String
+  location    Location @relation(fields: [locationId], references: [id])
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  ownerId     String
+  owner       Owner    @relation(fields: [ownerId], references: [id])
+
+  @@map("destinations")
+}
+
+model Location {
+  id           String        @id @default(uuid())
+  name         String
+  street       String
+  city         String
+  province     String
+  country      String
+  postalCode   String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  destinations Destination[]
+
+  @@map("locations")
+}
+
+model Category {
+  id           String        @id @default(uuid())
+  name         String
+  description  String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  destinations Destination[]
+
+  @@map("categories")
+}
+
+model Owner {
+  id           String        @id @default(uuid())
+  name         String
+  email        String
+  phone        String
+  address      String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  destinations Destination[]
+
+  @@map("owners")
+}
