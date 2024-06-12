@@ -2,6 +2,9 @@
 
 Full documentation for location API spesification
 
+- Production : <https://wander-api.chianyung.dev/api/locations>
+- Local : <http://localhost:3000/api/locations>
+
 | Endpoint             | HTTP     | Description             |
 | -------------------- | -------- | ----------------------- |
 | `/api/locations`     | `GET`    | Get all location        |

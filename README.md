@@ -1,6 +1,6 @@
 # Wander
 
-Wander API is a travel destination recommendation service. It provides a list of destinations based on the user's location and preferences.
+Wander API is a travel destination recommendation service. It provides a list of destinations in ASEAN to users.
 
 ## Tech Stack
 

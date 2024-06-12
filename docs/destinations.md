@@ -2,6 +2,9 @@
 
 Full documentation for destination API spesification
 
+- Production : https://wander-api.chianyung.dev/api/destinations
+- Local : http://localhost:3000/api/destinations
+
 | Endpoint                | HTTP     | Description               |
 | ----------------------- | -------- | ------------------------- |
 | `/api/destinations`     | `GET`    | Get all destinations      |
