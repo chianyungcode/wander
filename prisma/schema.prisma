@@ -13,6 +13,10 @@ model Destination {
   name        String
   description String
   ticketPrice Int
+  street      String
+  city        String
+  province    String
+  postalCode  String
   openHour    String
   closeHour   String
   createdAt   DateTime @default(now())
@@ -29,12 +33,9 @@ model Destination {
 
 model Location {
   id           String        @id @default(uuid())
-  name         String
-  street       String
   city         String
   province     String
   country      String
-  postalCode   String
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   destinations Destination[]

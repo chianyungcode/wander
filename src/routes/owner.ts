@@ -17,7 +17,7 @@ app.post("/", zValidator("json", OwnerValidation.CREATE), async (c) => {
       data: validatedData,
     });
 
-    return c.json(successResponse<Owner>(newOwner));
+    return c.json(successResponse<Owner>({ data: newOwner }));
   } catch (error) {
     console.log(error);
     return c.json({ error: "Internal server error" }, 500);
@@ -29,7 +29,7 @@ app.get("/", async (c) => {
   try {
     const owners = await prisma.owner.findMany();
 
-    return c.json(successResponse<Owner[]>(owners));
+    return c.json(successResponse<Owner[]>({ data: owners }));
   } catch (error) {
     console.log(error);
     return c.json({ error: "Internal server error" }, 500);
@@ -51,7 +51,7 @@ app.get("/:ownerId", async (c) => {
       return c.json({ message: "Owner not found" });
     }
 
-    return c.json(successResponse<Owner>(owner));
+    return c.json(successResponse<Owner>({ data: owner }));
   } catch (error) {
     console.log(error);
     return c.json({ error: "Internal server error" }, 500);
@@ -74,7 +74,7 @@ app.put("/:ownerId", zValidator("json", OwnerValidation.UPDATE), async (c) => {
       return c.json({ message: "Owner not found" });
     }
 
-    return c.json(successResponse<Owner>(updatedOwner));
+    return c.json(successResponse<Owner>({ data: updatedOwner }));
   } catch (error) {
     console.log(error);
     return c.json({ error: "Internal server error" }, 500);

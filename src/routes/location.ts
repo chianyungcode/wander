@@ -11,16 +11,35 @@ const app = new Hono();
 // Get all locations
 app.get("/", async (c) => {
   try {
-    const locations: Location[] = await prisma.location.findMany();
+    const { page = "1", limit = "10" } = c.req.query();
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
 
-    return c.json(successResponse<LocationResponse[]>(locations));
+    const totalData = await prisma.location.count();
+
+    const locations: Location[] = await prisma.location.findMany({
+      skip: (pageNumber - 1) * limitNumber,
+      take: limitNumber,
+    });
+
+    return c.json(
+      successResponse<LocationResponse[]>({
+        data: locations,
+        pagination: {
+          totalData,
+          page: pageNumber,
+          limit: limitNumber,
+          totalPages: Math.ceil(totalData / limitNumber),
+        },
+      })
+    );
   } catch (error) {
     console.log(error);
     return c.json({ error: "Internal server error" }, 500);
   }
 });
 
-// Create a new location
+// Create new location
 app.post("/", zValidator("json", LocationValidation.CREATE), async (c) => {
   try {
     const validatedData = c.req.valid("json");
@@ -29,7 +48,7 @@ app.post("/", zValidator("json", LocationValidation.CREATE), async (c) => {
       data: validatedData,
     });
 
-    return c.json(successResponse<LocationResponse>(newLocation));
+    return c.json(successResponse<LocationResponse>({ data: newLocation }));
   } catch (error) {
     console.log(error);
     return c.json({ error: "Internal server error" }, 500);
@@ -51,7 +70,7 @@ app.get("/:locationId", async (c) => {
       return c.json({ error: "Location not found" }, 404);
     }
 
-    return c.json(successResponse<LocationResponse>(location));
+    return c.json(successResponse<LocationResponse>({ data: location }));
   } catch (error) {
     console.log(error);
     return c.json({ error: "Internal server error" }, 500);
@@ -108,7 +127,7 @@ app.put(
         return c.json({ message: "Location not exist" });
       }
 
-      return c.json(successResponse<Location>(location));
+      return c.json(successResponse<Location>({ data: location }));
     } catch (error) {
       console.log(error);
       return c.json({ error: "Internal server error" }, 500);
