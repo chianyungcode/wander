@@ -1,12 +1,12 @@
-version: "3.8"
-
 services:
   backend-test:
     image: codecny/wander-render:latest
     build:
       context: .
       dockerfile: Dockerfile
-    env_file: .env
+    env_file:
+      path: .env
+      required: true
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - DIRECT_URL=${DIRECT_URL}
