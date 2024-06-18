@@ -1,16 +1,41 @@
 services:
-  backend-test:
+  backend:
+    container_name: backend-wander
     image: codecny/wander-render:latest
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      path: .env
-      required: true
+    env_file: .env
     environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - DIRECT_URL=${DIRECT_URL}
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database-wander:5432/${POSTGRES_DB}
       - APP_PORT=${APP_PORT}
     ports:
       - "${APP_PORT}:${APP_PORT}"
     command: bun start
+    networks:
+      - wander-network
+    depends_on:
+      - database
+  database:
+    container_name: database-wander
+    image: postgres:alpine3.20
+    env_file: .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - wander-network
+
+volumes:
+  postgres-data:
+    name: wander-postgres-data
+
+networks:
+  wander-network:
+    name: wander-network
+    driver: bridge

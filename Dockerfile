@@ -5,12 +5,12 @@ WORKDIR /usr/src/app
 
 ENV DATABASE_URL=URL
 ENV DIRECT_URL=URL
-ENV PORT=3000
+ENV APP_PORT=3000
 
 COPY . .
 
 RUN bun install
 
-EXPOSE ${PORT}
+EXPOSE ${APP_PORT}
 
 CMD ["bun", "run", "start"]
