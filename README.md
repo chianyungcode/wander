@@ -9,7 +9,7 @@ Wander API is a travel destination recommendation service. It provides a list of
 
 ## Entity Relationship Diagram
 
-[ERD](https://drive.google.com/file/d/1U7KOjQf81nc29zMSKe7SrGkUBi1iQICY/view?usp=sharing)
+![ERD](./public/assets/erd.svg)
 
 ## How to run Docker Container locally
 
