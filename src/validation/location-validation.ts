@@ -10,4 +10,8 @@ export class LocationValidation {
   static readonly UPDATE = LocationValidation.CREATE.extend({
     id: z.string(),
   });
+
+  static readonly DELETE = z.object({
+    id: z.string(),
+  });
 }

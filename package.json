@@ -3,7 +3,7 @@
     "dev": "bun run --hot src/index.ts",
     "start": "bun run src/index.ts",
     "db:migrations": "bun run prisma migrate dev --name dev",
-    "start-container": "bun run start && bun run db:migrations"
+    "start:container": "bun run start && bun run db:migrations"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",

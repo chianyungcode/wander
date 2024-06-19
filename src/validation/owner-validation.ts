@@ -14,4 +14,12 @@ export class OwnerValidation {
   static readonly UPDATE = LocationValidation.CREATE.extend({
     id: z.string(),
   });
+
+  static readonly DELETE = z.object({
+    id: z.string(),
+  });
+
+  static readonly GET = z.object({
+    id: z.string(),
+  });
 }

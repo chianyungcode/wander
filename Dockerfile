@@ -1,11 +1,12 @@
 FROM oven/bun:latest
-# --platform=amd64 
 
 WORKDIR /usr/src/app
 
 ENV DATABASE_URL=URL
-ENV DIRECT_URL=URL
 ENV APP_PORT=3000
+
+# If you are using supabase, you need to set the direct url
+# ENV DIRECT_URL=URL
 
 COPY . .
 
