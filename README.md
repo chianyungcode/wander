@@ -9,7 +9,7 @@ Wander API is a travel destination recommendation service. It provides a list of
 
 ## Entity Relationship Diagram
 
-[ERD](https://dbdiagram.io/d/Tourist-Attraction-ERD-666feb67a179551be60a7052)
+[ERD](https://drive.google.com/file/d/1U7KOjQf81nc29zMSKe7SrGkUBi1iQICY/view?usp=sharing)
 
 ## How to run Docker Container locally
 
@@ -25,9 +25,7 @@ Environment variables are defined in `.env` file.
 ### Build app image & run docker container
 
 ```bash
-docker compose build
-
-docker compose -f docker-compose.dev.yaml up
+docker compose -f docker-compose.dev.yaml up --build
 ```
 
 ## How to run locally
