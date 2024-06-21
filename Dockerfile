@@ -1,4 +1,6 @@
-FROM oven/bun:latest
+FROM --platform=amd64 oven/bun:latest
+
+# 
 
 WORKDIR /usr/src/app
 

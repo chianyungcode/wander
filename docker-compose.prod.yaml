@@ -1,29 +1,7 @@
 services:
   backend-app:
     container_name: backend-wander
-    image: codecny/wander-render:latest
+    image: codecny/wander-production-render:latest
     build:
       context: .
       dockerfile: Dockerfile
-    env_file: .env
-    command: bun start
-    networks:
-      - my-wander-network
-    depends_on:
-      - database
-  database:
-    container_name: database-wander
-    image: postgres:alpine3.20
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    networks:
-      - my-wander-network
-
-volumes:
-  postgres-data:
-    name: wander-postgres-data
-
-networks:
-  my-wander-network:
-    name: wander-network
-    driver: bridge

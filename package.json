@@ -1,6 +1,7 @@
 {
   "scripts": {
     "dev": "bun run --hot src/index.ts",
+    "prod": "dotenvx run -f .env.production -- bun run src/index.ts",
     "start": "bun run src/index.ts",
     "db:migrations": "bun run prisma migrate dev --name dev",
     "start:container": "bun run start && bun run db:migrations"

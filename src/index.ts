@@ -11,7 +11,7 @@ app.use(logger());
 
 app.get("/", (c) => {
   return c.json({
-    message: "Hello from root",
+    message: `Hello from Wander!`,
   });
 });
 app.route("api/destinations", destinations);

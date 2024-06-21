@@ -11,6 +11,13 @@ Wander API is a travel destination recommendation service. It provides a list of
 
 ![ERD](./public/assets/erd.svg)
 
+## API Documentation Endpoints
+
+- [Destination API Documentation](./docs/destinations.md)
+- [Location API Documentation](./docs/locations.md)
+- [Owner API Documentation](./docs/owners.md)
+- [Category API Documentation](./docs/categories.md)
+
 ## How to run Docker Container locally
 
 Environment variables are defined in `.env` file.

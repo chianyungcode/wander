@@ -1,6 +1,8 @@
-# deps
-node_modules/
+# dependencies
+/node_modules
 
-# env
-.env
+# environment variables
+.env*
 
+# macOS specific
+.DS_Store
