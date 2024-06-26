@@ -1,4 +1,4 @@
-import { z, ZodType } from "zod";
+import { z } from "zod";
 
 export class LocationValidation {
   static readonly CREATE = z.object({
@@ -8,10 +8,15 @@ export class LocationValidation {
   });
 
   static readonly UPDATE = LocationValidation.CREATE.extend({
-    id: z.string(),
+    id: z.string().uuid().optional(),
   });
 
   static readonly DELETE = z.object({
     id: z.string(),
+  });
+
+  static readonly PAGINATION = z.object({
+    page: z.string().optional(),
+    limit: z.string().optional(),
   });
 }

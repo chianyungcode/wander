@@ -8,17 +8,8 @@ Full documentation for category API specification
 | `/api/categories/:id` | `GET`    | Get specific category |
 | `/api/categories`     | `POST`   | Create new category   |
 | `/api/categories`     | `DELETE` | Delete all category   |
-| `/api/categories/:id` | `GET`    | Delete category by id |
+| `/api/categories/:id` | `DELETE` | Delete category by id |
 | `/api/categories/:id` | `PUT`    | Update category by id |
-
-API route that have been production ready
-
-- [x] Get all category
-- [x] Create category
-- [x] Get specific category
-- [x] Update category by id
-- [] Delete category by id
-- [] Delete all category
 
 ## Create Category
 
@@ -157,7 +148,9 @@ DELETE /api/categories/:id
 ### Response body (failed)
 
 ```json
-"errors": "Failed to delete category"
+{
+  "errors": "Failed to delete category"
+}
 ```
 
 ## Delete all category
@@ -173,6 +166,14 @@ DELETE /api/categories
 ```json
 {
   "message": "Categories deleted"
+}
+```
+
+### Response body (Failed)
+
+```json
+{
+  "message": "Failed to delete all category"
 }
 ```
 
@@ -204,5 +205,7 @@ PUT /api/categories/:id
 ### Response body (failed)
 
 ```json
-"errors": "Failed to update category"
+{
+  "errors": "Failed to update category"
+}
 ```

@@ -1,8 +1,9 @@
 import { Hono } from "hono";
-import prisma from "../lib/prisma";
-import { Category } from "@prisma/client";
-import { successResponse } from "../utils/response";
 import { zValidator } from "@hono/zod-validator";
+import { Category } from "@prisma/client";
+
+import prisma from "../lib/prisma";
+import { successResponse } from "../utils/response";
 import { CategoryValidation } from "../validation/category-validation";
 
 const app = new Hono();
@@ -47,9 +48,9 @@ app.post("/", zValidator("json", CategoryValidation.CREATE), async (c) => {
       data: validatedData,
     });
 
-    const successData = successResponse<Category>({ data: newCategory });
+    const categoryResponse = successResponse<Category>({ data: newCategory });
 
-    return c.json(successData);
+    return c.json(categoryResponse);
   } catch (error) {
     console.error(error);
     return c.json(
@@ -77,9 +78,9 @@ app.get(
         return c.json({ message: "Category not found" });
       }
 
-      const successData = successResponse<Category>({ data: category });
+      const categoryResponse = successResponse<Category>({ data: category });
 
-      return c.json(successData);
+      return c.json(categoryResponse);
     } catch (error) {
       console.error(error);
       return c.json({
@@ -110,9 +111,11 @@ app.put(
         return c.json({ message: "Category not found" });
       }
 
-      const successData = successResponse<Category>({ data: updatedCategory });
+      const categoryResponse = successResponse<Category>({
+        data: updatedCategory,
+      });
 
-      return c.json(successData);
+      return c.json(categoryResponse);
     } catch (error) {
       console.error(error);
 

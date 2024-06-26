@@ -2,9 +2,10 @@
   "scripts": {
     "dev": "bun run --hot src/index.ts",
     "prod": "dotenvx run -f .env.production -- bun run src/index.ts",
-    "start": "bun run src/index.ts",
-    "db:migrations": "bun run prisma migrate dev --name dev",
-    "start:container": "bun run start && bun run db:migrations"
+    "db:migrate:dev": "prisma migrate dev",
+    "db:migrate:prod": "prisma migrate deploy",
+    "db:generate": "prisma generate",
+    "db:studio": "prisma studio"
   },
   "dependencies": {
     "@hono/swagger-ui": "^0.3.0",

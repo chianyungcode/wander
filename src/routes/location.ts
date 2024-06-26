@@ -10,9 +10,9 @@ import { formatLocations } from "../utils/format-data";
 const app = new Hono();
 
 // Get all locations
-app.get("/", async (c) => {
+app.get("/", zValidator("query", LocationValidation.PAGINATION), async (c) => {
   try {
-    const { page = "1", limit = "10" } = c.req.query();
+    const { page = "1", limit = "10" } = c.req.valid("query");
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);
 
