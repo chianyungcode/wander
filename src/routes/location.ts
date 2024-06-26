@@ -5,6 +5,7 @@ import { successResponse } from "../utils/response";
 import { zValidator } from "@hono/zod-validator";
 import { LocationValidation } from "../validation/location-validation";
 import { LocationResponse } from "../model/location-model";
+import { formatLocations } from "../utils/format-data";
 
 const app = new Hono();
 
@@ -22,17 +23,17 @@ app.get("/", async (c) => {
       take: limitNumber,
     });
 
-    return c.json(
-      successResponse<LocationResponse[]>({
-        data: locations,
-        pagination: {
-          totalData,
-          page: pageNumber,
-          limit: limitNumber,
-          totalPages: Math.ceil(totalData / limitNumber),
-        },
-      })
-    );
+    const locationsResponse = successResponse<LocationResponse[]>({
+      data: locations,
+      pagination: {
+        totalData,
+        page: pageNumber,
+        limit: limitNumber,
+        totalPages: Math.ceil(totalData / limitNumber),
+      },
+    });
+
+    return c.json(locationsResponse);
   } catch (error) {
     console.log(error);
     return c.json({ error: "Internal server error" }, 500);

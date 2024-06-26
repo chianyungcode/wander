@@ -14,6 +14,7 @@ app.get("/", (c) => {
     message: `Hello from Wander!`,
   });
 });
+
 app.route("api/destinations", destinations);
 app.route("api/locations", locations);
 app.route("api/owners", owners);

@@ -7,6 +7,7 @@ import { DestinationValidation } from "../validation/destination-validation";
 
 const app = new Hono();
 
+// Get all destination
 app.get("/", async (c) => {
   try {
     const { page = "1", limit = "10" } = c.req.query();
@@ -37,6 +38,7 @@ app.get("/", async (c) => {
   }
 });
 
+// Create destination
 app.post("/", zValidator("json", DestinationValidation.CREATE), async (c) => {
   try {
     const validatedData = c.req.valid("json");
