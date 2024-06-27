@@ -4,6 +4,7 @@ import { errorResponse, successResponse } from "../utils/response";
 import { zValidator } from "@hono/zod-validator";
 import { Destination } from "@prisma/client";
 import { DestinationValidation } from "../validation/destination-validation";
+import { uploadWithR2 } from "../lib/cloudflare-r2";
 
 const app = new Hono();
 
@@ -152,9 +153,49 @@ app.delete("/", async (c) => {
 });
 
 // Upload image for destination
-
 app.post("/:id/upload", async (c) => {
   try {
-  } catch (error) {}
+    const { id } = c.req.param();
+    const body = await c.req.parseBody();
+
+    const file = body["fileName"];
+
+    if (!(file instanceof File)) {
+      return c.json({ message: "File not found" }, 400);
+    }
+
+    console.log("Uploading file to R2");
+    const imageData = await uploadWithR2(file, id);
+
+    // Insert image data to database
+    await prisma.image.create({
+      data: {
+        url: imageData.url,
+        destinationId: id,
+      },
+    });
+
+    const destination = await prisma.destination.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        images: true,
+      },
+    });
+
+    if (!destination) {
+      return c.json({ message: "Destination not found" });
+    }
+
+    const destinationResponse = successResponse<Destination>({
+      data: destination,
+    });
+
+    return c.json(destinationResponse);
+  } catch (error) {
+    console.error(error);
+    return c.json({ error: "Internal server error" }, 500);
+  }
 });
 export default app;

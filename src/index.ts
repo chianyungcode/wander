@@ -24,7 +24,7 @@ app.get("/", async (c) => {
   const token = await sign(payload, jwtSecret);
 
   return c.json({
-    message: `Hello from ${token}!`,
+    message: `Hello from ${process.env.SUPABASE_API_KEY}!`,
   });
 });
 

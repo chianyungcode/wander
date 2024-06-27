@@ -4,9 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  // directUrl = env("DIRECT_URL") This direct url for Supabase
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Destination {
@@ -17,6 +17,7 @@ model Destination {
   street      String
   city        String
   province    String
+  country     String
   postalCode  String
   openHour    String
   closeHour   String
@@ -28,6 +29,8 @@ model Destination {
   category    Category @relation(fields: [categoryId], references: [id])
   ownerId     String
   owner       Owner    @relation(fields: [ownerId], references: [id])
+
+  images Image[]
 
   @@map("destinations")
 }
@@ -61,9 +64,23 @@ model Owner {
   email        String
   phone        String
   address      String
+  city         String
+  country      String
+  postalCode   String
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   destinations Destination[]
 
   @@map("owners")
+}
+
+model Image {
+  id            String      @id @default(uuid())
+  url           String
+  destinationId String
+  destination   Destination @relation(fields: [destinationId], references: [id])
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@map("images")
 }

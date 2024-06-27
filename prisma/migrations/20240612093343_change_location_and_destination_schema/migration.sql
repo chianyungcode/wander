@@ -11,12 +11,14 @@
 
 */
 -- AlterTable
-ALTER TABLE "destinations" ADD COLUMN     "city" TEXT NOT NULL,
+ALTER TABLE "destinations"
+ADD COLUMN     "city" TEXT NOT NULL,
 ADD COLUMN     "postalCode" TEXT NOT NULL,
 ADD COLUMN     "province" TEXT NOT NULL,
 ADD COLUMN     "street" TEXT NOT NULL;
 
 -- AlterTable
-ALTER TABLE "locations" DROP COLUMN "name",
+ALTER TABLE "locations"
+DROP COLUMN "name",
 DROP COLUMN "postalCode",
 DROP COLUMN "street";
