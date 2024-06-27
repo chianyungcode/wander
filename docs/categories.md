@@ -45,7 +45,7 @@ POST /api/categories
 }
 ```
 
-### Response body (failed)
+### Response body (Failed)
 
 ```json
 {
@@ -78,7 +78,7 @@ GET /api/categories/:id
 }
 ```
 
-### Response body (failed)
+### Response body (Failed)
 
 ```json
 {
@@ -86,7 +86,7 @@ GET /api/categories/:id
 }
 ```
 
-## Get All Category
+## Get Categories
 
 Endpoint:
 
@@ -121,15 +121,15 @@ GET /api/categories
 }
 ```
 
-### Response body (failed)
+### Response body (Failed)
 
 ```json
 {
-  "errors": "failed to get data"
+  "errors": "Failed to get data"
 }
 ```
 
-## Delete category by id
+## Delete Category
 
 Endpoint:
 
@@ -145,7 +145,7 @@ DELETE /api/categories/:id
 }
 ```
 
-### Response body (failed)
+### Response body (Failed)
 
 ```json
 {
@@ -153,7 +153,7 @@ DELETE /api/categories/:id
 }
 ```
 
-## Delete all category
+## Delete Categories
 
 Endpoint:
 
@@ -165,7 +165,7 @@ DELETE /api/categories
 
 ```json
 {
-  "message": "Categories deleted"
+  "message": "All category deleted"
 }
 ```
 
@@ -177,12 +177,21 @@ DELETE /api/categories
 }
 ```
 
-## Update category by id
+## Update Category
 
 Endpoint:
 
 ```http request
 PUT /api/categories/:id
+```
+
+### Request body (Success)
+
+```json
+{
+  "name": "Hiking",
+  "description": "Aktivitas menyenangkan di pegunungan"
+}
 ```
 
 ### Response body (Success)
@@ -202,7 +211,7 @@ PUT /api/categories/:id
 }
 ```
 
-### Response body (failed)
+### Response body (Failed)
 
 ```json
 {

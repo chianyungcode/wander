@@ -57,7 +57,11 @@ app.post("/", zValidator("json", LocationValidation.CREATE), async (c) => {
       data: validatedData,
     });
 
-    return c.json(successResponse<LocationResponse>({ data: newLocation }));
+    const locationResponse = successResponse<LocationResponse>({
+      data: newLocation,
+    });
+
+    return c.json(locationResponse);
   } catch (error) {
     console.log(error);
     return c.json({ error: "Internal server error" }, 500);
@@ -79,40 +83,16 @@ app.get("/:locationId", async (c) => {
       return c.json({ error: "Location not found" }, 404);
     }
 
-    return c.json(successResponse<LocationResponse>({ data: location }));
+    const locationResponse = successResponse<LocationResponse>({
+      data: location,
+    });
+
+    return c.json(locationResponse);
   } catch (error) {
     console.log(error);
     return c.json({ error: "Internal server error" }, 500);
   }
 });
-
-// Get location by query param city
-// app.get("/", async (c) => {
-//   try {
-//     const { city } = c.req.query();
-
-//     const filteredLocations = await prisma.location.findMany({
-//       where: {
-//         city: {
-//           search: city,
-//         },
-//       },
-//     });
-
-//     if (!filteredLocations) {
-//       return c.json({ message: "Location not available" });
-//     }
-
-//     const responseData = successResponse<Location[]>({
-//       data: filteredLocations,
-//     });
-
-//     return c.json(responseData);
-//   } catch (error) {
-//     console.error(error);
-//     return c.json({ errors: "Internal server error" }, 500);
-//   }
-// });
 
 // Delete location by id
 app.delete("/:locationId", async (c) => {

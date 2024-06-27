@@ -57,6 +57,7 @@ app.get("/:ownerId", async (c) => {
   }
 });
 
+// Update owner by id
 app.put("/:ownerId", zValidator("json", OwnerValidation.UPDATE), async (c) => {
   try {
     const { ownerId } = c.req.param();

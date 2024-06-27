@@ -22,17 +22,17 @@ app.get("/", async (c) => {
       take: limitNumber,
     });
 
-    return c.json(
-      successResponse<Category[]>({
-        data: categories,
-        pagination: {
-          totalData,
-          page: pageNumber,
-          limit: limitNumber,
-          totalPages: Math.ceil(totalData / limitNumber),
-        },
-      })
-    );
+    const categoriesResponse = successResponse<Category[]>({
+      data: categories,
+      pagination: {
+        totalData,
+        page: pageNumber,
+        limit: limitNumber,
+        totalPages: Math.ceil(totalData / limitNumber),
+      },
+    });
+
+    return c.json(categoriesResponse);
   } catch (error) {
     console.log(error);
     return c.json({ error: "Internal server error" }, 500);

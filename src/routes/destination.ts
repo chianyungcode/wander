@@ -1,6 +1,6 @@
 import prisma from "../lib/prisma";
 import { Hono } from "hono";
-import { successResponse } from "../utils/response";
+import { errorResponse, successResponse } from "../utils/response";
 import { zValidator } from "@hono/zod-validator";
 import { Destination } from "@prisma/client";
 import { DestinationValidation } from "../validation/destination-validation";
@@ -47,13 +47,14 @@ app.post("/", zValidator("json", DestinationValidation.CREATE), async (c) => {
       data: validatedData,
     });
 
-    return c.json(successResponse<Destination>({ data: newDestination }));
+    return c.json(successResponse<Destination>({ data: newDestination }), 201);
   } catch (error) {
     console.log(error);
     return c.json({ error: "Internal server error" }, 500);
   }
 });
 
+// Get destination
 app.get("/:id", async (c) => {
   try {
     const { id } = c.req.param();
@@ -75,4 +76,85 @@ app.get("/:id", async (c) => {
   }
 });
 
+// Update destination
+app.put(
+  "/:id",
+  zValidator("json", DestinationValidation.UPDATE),
+  zValidator("param", DestinationValidation.GET_ID),
+  async (c) => {
+    try {
+      const validatedData = c.req.valid("json");
+      const { id } = c.req.valid("param");
+
+      const updatedDestination = await prisma.destination.update({
+        where: {
+          id,
+        },
+        data: validatedData,
+      });
+
+      if (!updatedDestination) {
+        return c.json({ message: "Destination not found" });
+      }
+
+      const destinationResponse = successResponse<Destination>({
+        data: updatedDestination,
+      });
+
+      return c.json(destinationResponse);
+    } catch (error) {
+      console.error(error);
+
+      return c.json({ message: "Internal server error" }, 500);
+    }
+  }
+);
+
+// Delete destination
+app.delete(
+  "/:id",
+  zValidator("param", DestinationValidation.GET_ID),
+  async (c) => {
+    try {
+      const { id } = c.req.valid("param");
+
+      const destination = await prisma.destination.delete({
+        where: {
+          id,
+        },
+      });
+
+      if (!destination) {
+        return c.json({
+          message: "Failed to delete destination, ID not found",
+        });
+      }
+
+      return c.json({ message: "Destination deleted" });
+    } catch (error) {
+      console.error(error);
+      return c.json({ message: "Internal server errror" }, 500);
+    }
+  }
+);
+
+// Delete all destination
+app.delete("/", async (c) => {
+  try {
+    await prisma.destination.deleteMany();
+
+    return c.json({ message: "All destination have been deleted" });
+  } catch (error) {
+    console.error(error);
+
+    return c.json({ message: "Internal server error" }, 500);
+  }
+});
+
+// Upload image for destination
+
+app.post("/:id/upload", async (c) => {
+  try {
+  } catch (error) {}
+});
 export default app;

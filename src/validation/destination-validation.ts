@@ -1,6 +1,10 @@
 import { z } from "zod";
 
 export class DestinationValidation {
+  static readonly GET_ID = z.object({
+    id: z.string().uuid(),
+  });
+
   static readonly CREATE = z.object({
     name: z
       .string()
@@ -32,16 +36,12 @@ export class DestinationValidation {
     ticketPrice: z
       .number()
       .positive({ message: "Harga tiket harus lebih dari 0" }),
-    openHour: z
-      .string()
-      .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
-        message: "Format jam buka tidak valid (HH:MM)",
-      }),
-    closeHour: z
-      .string()
-      .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
-        message: "Format jam tutup tidak valid (HH:MM)",
-      }),
+    openHour: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
+      message: "Format jam buka tidak valid (HH:MM)",
+    }),
+    closeHour: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
+      message: "Format jam tutup tidak valid (HH:MM)",
+    }),
     categoryId: z
       .string()
       .uuid({ message: "ID kategori harus berupa UUID yang valid" }),
@@ -53,9 +53,7 @@ export class DestinationValidation {
       .uuid({ message: "ID lokasi harus berupa UUID yang valid" }),
   });
 
-  static readonly UPDATE = DestinationValidation.CREATE.extend({
-    id: z.string(),
-  });
+  static readonly UPDATE = DestinationValidation.CREATE;
 
   static readonly DELETE = z.object({
     id: z.string(),
