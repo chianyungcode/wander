@@ -2,7 +2,8 @@
 /node_modules
 
 # environment variables
-.env*
+.env
+.env.production
 
 # macOS specific
 .DS_Store

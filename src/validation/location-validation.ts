@@ -18,5 +18,6 @@ export class LocationValidation {
   static readonly PAGINATION = z.object({
     page: z.string().optional(),
     limit: z.string().optional(),
+    city: z.string().optional(),
   });
 }

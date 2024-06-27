@@ -5,14 +5,13 @@ import { successResponse } from "../utils/response";
 import { zValidator } from "@hono/zod-validator";
 import { LocationValidation } from "../validation/location-validation";
 import { LocationResponse } from "../model/location-model";
-import { formatLocations } from "../utils/format-data";
 
 const app = new Hono();
 
 // Get all locations
 app.get("/", zValidator("query", LocationValidation.PAGINATION), async (c) => {
   try {
-    const { page = "1", limit = "10" } = c.req.valid("query");
+    const { page = "1", limit = "10", city } = c.req.valid("query");
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);
 
@@ -21,7 +20,16 @@ app.get("/", zValidator("query", LocationValidation.PAGINATION), async (c) => {
     const locations: Location[] = await prisma.location.findMany({
       skip: (pageNumber - 1) * limitNumber,
       take: limitNumber,
+      where: {
+        city: {
+          search: city,
+        },
+      },
     });
+
+    if (!locations) {
+      return c.json({ message: "Location not available" });
+    }
 
     const locationsResponse = successResponse<LocationResponse[]>({
       data: locations,
@@ -77,6 +85,34 @@ app.get("/:locationId", async (c) => {
     return c.json({ error: "Internal server error" }, 500);
   }
 });
+
+// Get location by query param city
+// app.get("/", async (c) => {
+//   try {
+//     const { city } = c.req.query();
+
+//     const filteredLocations = await prisma.location.findMany({
+//       where: {
+//         city: {
+//           search: city,
+//         },
+//       },
+//     });
+
+//     if (!filteredLocations) {
+//       return c.json({ message: "Location not available" });
+//     }
+
+//     const responseData = successResponse<Location[]>({
+//       data: filteredLocations,
+//     });
+
+//     return c.json(responseData);
+//   } catch (error) {
+//     console.error(error);
+//     return c.json({ errors: "Internal server error" }, 500);
+//   }
+// });
 
 // Delete location by id
 app.delete("/:locationId", async (c) => {
