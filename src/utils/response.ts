@@ -15,7 +15,7 @@ interface SuccessResponse<T> {
 interface ErrorResponse<T> {
   status: string;
   statusCode: number;
-  errors: any;
+  errors: unknown;
 }
 
 export const successResponse = <T>({
@@ -35,7 +35,7 @@ export const successResponse = <T>({
 
 export const errorResponse = <T>(
   errors: T,
-  statusCode: number
+  statusCode: number,
 ): ErrorResponse<T> => {
   return {
     status: "error",

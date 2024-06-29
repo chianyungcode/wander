@@ -1,6 +1,6 @@
-import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { Category } from "@prisma/client";
+import type { Category } from "@prisma/client";
+import { Hono } from "hono";
 
 import prisma from "../lib/prisma";
 import { successResponse } from "../utils/response";
@@ -12,8 +12,8 @@ const app = new Hono();
 app.get("/", async (c) => {
   try {
     const { page = "1", limit = "10" } = c.req.query();
-    const pageNumber = parseInt(page, 10);
-    const limitNumber = parseInt(limit, 10);
+    const pageNumber = Number.parseInt(page, 10);
+    const limitNumber = Number.parseInt(limit, 10);
 
     const totalData = await prisma.category.count();
 
@@ -55,7 +55,7 @@ app.post("/", zValidator("json", CategoryValidation.CREATE), async (c) => {
     console.error(error);
     return c.json(
       { errors: "Failed to create a new category. Please try again later." },
-      500
+      500,
     );
   }
 });
@@ -87,7 +87,7 @@ app.get(
         errors: "Failed to get category. Please try again later",
       });
     }
-  }
+  },
 );
 
 // Update category by id
@@ -121,10 +121,10 @@ app.put(
 
       return c.json(
         { errors: "Failed to update category. Please try again later." },
-        500
+        500,
       );
     }
-  }
+  },
 );
 
 app.delete(
@@ -151,7 +151,7 @@ app.delete(
       console.error(error);
       return c.json({ errors: "Failed to delete category" });
     }
-  }
+  },
 );
 
 app.delete("/", async (c) => {

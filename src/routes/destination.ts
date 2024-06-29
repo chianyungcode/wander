@@ -1,10 +1,10 @@
-import prisma from "../lib/prisma";
-import { Hono } from "hono";
-import { errorResponse, successResponse } from "../utils/response";
 import { zValidator } from "@hono/zod-validator";
-import { Destination } from "@prisma/client";
-import { DestinationValidation } from "../validation/destination-validation";
+import type { Destination } from "@prisma/client";
+import { Hono } from "hono";
 import { uploadWithR2 } from "../lib/cloudflare-r2";
+import prisma from "../lib/prisma";
+import { errorResponse, successResponse } from "../utils/response";
+import { DestinationValidation } from "../validation/destination-validation";
 
 const app = new Hono();
 
@@ -12,8 +12,8 @@ const app = new Hono();
 app.get("/", async (c) => {
   try {
     const { page = "1", limit = "10" } = c.req.query();
-    const pageNumber = parseInt(page, 10);
-    const limitNumber = parseInt(limit, 10);
+    const pageNumber = Number.parseInt(page, 10);
+    const limitNumber = Number.parseInt(limit, 10);
 
     const totalData = await prisma.destination.count();
 
@@ -31,7 +31,7 @@ app.get("/", async (c) => {
           limit: limitNumber,
           totalPages: Math.ceil(totalData / limitNumber),
         },
-      })
+      }),
     );
   } catch (error) {
     console.log(error);
@@ -108,7 +108,7 @@ app.put(
 
       return c.json({ message: "Internal server error" }, 500);
     }
-  }
+  },
 );
 
 // Delete destination
@@ -136,7 +136,7 @@ app.delete(
       console.error(error);
       return c.json({ message: "Internal server errror" }, 500);
     }
-  }
+  },
 );
 
 // Delete all destination
@@ -158,6 +158,7 @@ app.post("/:id/upload", async (c) => {
     const { id } = c.req.param();
     const body = await c.req.parseBody();
 
+    // biome-ignore lint/complexity/useLiteralKeys: <explanation>
     const file = body["fileName"];
 
     if (!(file instanceof File)) {

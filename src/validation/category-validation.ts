@@ -1,16 +1,16 @@
 import { z } from "zod";
 
-export class CategoryValidation {
-  static readonly CREATE = z.object({
+export namespace CategoryValidation {
+  export const CREATE = z.object({
     name: z.string().min(1),
     description: z.string().min(1),
   });
 
-  static readonly GET_ID = z.object({
+  export const GET_ID = z.object({
     categoryId: z.string().uuid(),
   });
 
-  static readonly UPDATE = CategoryValidation.CREATE.extend({
+  export const UPDATE = CategoryValidation.CREATE.extend({
     id: z.string().uuid().optional(),
   });
 }

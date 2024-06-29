@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-export class DestinationValidation {
-  static readonly GET_ID = z.object({
+export namespace DestinationValidation {
+  export const GET_ID = z.object({
     id: z.string().uuid(),
   });
 
-  static readonly CREATE = z.object({
+  export const CREATE = z.object({
     name: z
       .string()
       .min(2, { message: "Nama harus minimal 2 karakter" })
@@ -53,13 +53,13 @@ export class DestinationValidation {
       .uuid({ message: "ID lokasi harus berupa UUID yang valid" }),
   });
 
-  static readonly UPDATE = DestinationValidation.CREATE;
+  export const UPDATE = DestinationValidation.CREATE;
 
-  static readonly DELETE = z.object({
+  export const DELETE = z.object({
     id: z.string(),
   });
 
-  static readonly GET = z.object({
+  export const GET = z.object({
     id: z.string(),
   });
 }

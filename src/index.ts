@@ -1,11 +1,11 @@
 import { Hono } from "hono";
-import { logger } from "hono/logger";
 import { decode, sign, verify } from "hono/jwt";
+import { logger } from "hono/logger";
 
+import categories from "./routes/category";
 import destinations from "./routes/destination";
 import locations from "./routes/location";
 import owners from "./routes/owner";
-import categories from "./routes/category";
 
 const app = new Hono();
 app.use(logger());
@@ -24,7 +24,7 @@ app.get("/", async (c) => {
   const token = await sign(payload, jwtSecret);
 
   return c.json({
-    message: `Hello from ${process.env.SUPABASE_API_KEY}!`,
+    message: `Hello from ${process.env.R2_AWS_ACCESS_KEY_ID}!`,
   });
 });
 

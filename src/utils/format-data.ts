@@ -1,4 +1,4 @@
-import { Location } from "@prisma/client";
+import type { Location } from "@prisma/client";
 
 export function formatLocations(locations: Location[]) {
   const formattedLocations = locations.map((location) => ({

@@ -1,19 +1,19 @@
 import {
   CreateBucketCommand,
+  GetObjectCommand,
+  HeadBucketCommand,
   PutObjectCommand,
   S3Client,
-  HeadBucketCommand,
-  GetObjectCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 export const uploadWithR2 = async (file: File, destinationId: string) => {
   const s3Client = new S3Client({
-    endpoint: process.env.R2_ENDPOINT!,
+    endpoint: process.env.R2_ENDPOINT || "",
     region: "auto",
     credentials: {
-      accessKeyId: process.env.R2_AWS_ACCESS_KEY_ID!,
-      secretAccessKey: process.env.R2_AWS_SECRET_KEY_ACCESS!,
+      accessKeyId: process.env.R2_AWS_ACCESS_KEY_ID || "",
+      secretAccessKey: process.env.R2_AWS_SECRET_KEY_ACCESS || "",
     },
   });
 
@@ -24,14 +24,14 @@ export const uploadWithR2 = async (file: File, destinationId: string) => {
     await s3Client.send(
       new HeadBucketCommand({
         Bucket: bucketName,
-      })
+      }),
     );
   } catch (error) {
     if (error instanceof Error && error.name === "NotFound") {
       await s3Client.send(
         new CreateBucketCommand({
           Bucket: bucketName,
-        })
+        }),
       );
     } else {
       throw error;
@@ -64,7 +64,7 @@ export const uploadWithR2 = async (file: File, destinationId: string) => {
       Bucket: bucketName,
       Key: uniqueFileName,
       Body: Buffer.from(arrayBuffer),
-    })
+    }),
   );
 
   // const presignedUrl = await getSignedUrl(

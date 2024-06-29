@@ -1,9 +1,9 @@
 import { zValidator } from "@hono/zod-validator";
+import type { Owner } from "@prisma/client";
 import { Hono } from "hono";
-import { OwnerValidation } from "../validation/owner-validation";
 import prisma from "../lib/prisma";
 import { successResponse } from "../utils/response";
-import { Owner } from "@prisma/client";
+import { OwnerValidation } from "../validation/owner-validation";
 
 const app = new Hono();
 

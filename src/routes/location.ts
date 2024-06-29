@@ -1,10 +1,10 @@
-import { Location } from "@prisma/client";
-import prisma from "../lib/prisma";
-import { Hono } from "hono";
-import { successResponse } from "../utils/response";
 import { zValidator } from "@hono/zod-validator";
+import type { Location } from "@prisma/client";
+import { Hono } from "hono";
+import prisma from "../lib/prisma";
+import type { LocationResponse } from "../model/location-model";
+import { successResponse } from "../utils/response";
 import { LocationValidation } from "../validation/location-validation";
-import { LocationResponse } from "../model/location-model";
 
 const app = new Hono();
 
@@ -12,8 +12,8 @@ const app = new Hono();
 app.get("/", zValidator("query", LocationValidation.PAGINATION), async (c) => {
   try {
     const { page = "1", limit = "10", city } = c.req.valid("query");
-    const pageNumber = parseInt(page, 10);
-    const limitNumber = parseInt(limit, 10);
+    const pageNumber = Number.parseInt(page, 10);
+    const limitNumber = Number.parseInt(limit, 10);
 
     const totalData = await prisma.location.count();
 
@@ -149,7 +149,7 @@ app.put(
       console.log(error);
       return c.json({ error: "Internal server error" }, 500);
     }
-  }
+  },
 );
 
 export default app;
