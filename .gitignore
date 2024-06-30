@@ -1,14 +1,5 @@
-# dependencies
-node_modules/
-
-# environment variables
-.env
+# Environment Variable
 .env.production
 
-# macOS specific
-.DS_Store
-
-# IDE configurations
-.idea/
-.vscode/
-# End of Selection
+# Biome
+biome.json

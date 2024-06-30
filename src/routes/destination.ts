@@ -1,9 +1,10 @@
 import { zValidator } from "@hono/zod-validator";
 import type { Destination } from "@prisma/client";
 import { Hono } from "hono";
+
 import { uploadWithR2 } from "../lib/cloudflare-r2";
 import prisma from "../lib/prisma";
-import { errorResponse, successResponse } from "../utils/response";
+import { successResponse } from "../utils/response";
 import { DestinationValidation } from "../validation/destination-validation";
 
 const app = new Hono();
@@ -199,4 +200,5 @@ app.post("/:id/upload", async (c) => {
     return c.json({ error: "Internal server error" }, 500);
   }
 });
+
 export default app;
