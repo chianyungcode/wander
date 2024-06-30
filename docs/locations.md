@@ -77,7 +77,7 @@ GET /api/locations/:id
         "id" : "MJB5VOPOZG2UXYGWKP7JO"
         "city" : "Jimbaran",
         "province" : "Bali",
-        "country" : "Indonesia"
+        "country" : "Indonesia",
         "createdAt": "2024-06-11T08:38:47.631Z",
         "updatedAt": "2024-06-11T08:38:47.631Z"
     }
@@ -119,7 +119,7 @@ GET /api/locations
         "id" : "MJB5VOPOZG2UXYGWUDH134"
         "city" : "Kuta",
         "province" : "Bali",
-        "country" : "Indonesia"
+        "country" : "Indonesia",
         "createdAt": "2024-06-11T08:38:47.631Z",
         "updatedAt": "2024-06-11T08:38:47.631Z"
     }

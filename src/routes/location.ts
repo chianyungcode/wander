@@ -28,7 +28,9 @@ app.get("/", zValidator("query", LocationValidation.PAGINATION), async (c) => {
     });
 
     if (!locations) {
-      return c.json({ message: "Location not available" });
+      return c.json({
+        message: "Location not available",
+      });
     }
 
     const locationsResponse = successResponse<LocationResponse[]>({
@@ -44,7 +46,12 @@ app.get("/", zValidator("query", LocationValidation.PAGINATION), async (c) => {
     return c.json(locationsResponse);
   } catch (error) {
     console.log(error);
-    return c.json({ error: "Internal server error" }, 500);
+    return c.json(
+      {
+        error: "Internal server error",
+      },
+      500,
+    );
   }
 });
 
@@ -64,7 +71,12 @@ app.post("/", zValidator("json", LocationValidation.CREATE), async (c) => {
     return c.json(locationResponse);
   } catch (error) {
     console.log(error);
-    return c.json({ error: "Internal server error" }, 500);
+    return c.json(
+      {
+        error: "Internal server error",
+      },
+      500,
+    );
   }
 });
 
@@ -80,7 +92,12 @@ app.get("/:locationId", async (c) => {
     });
 
     if (!location) {
-      return c.json({ error: "Location not found" }, 404);
+      return c.json(
+        {
+          error: "Location not found",
+        },
+        404,
+      );
     }
 
     const locationResponse = successResponse<LocationResponse>({
@@ -90,7 +107,12 @@ app.get("/:locationId", async (c) => {
     return c.json(locationResponse);
   } catch (error) {
     console.log(error);
-    return c.json({ error: "Internal server error" }, 500);
+    return c.json(
+      {
+        error: "Internal server error",
+      },
+      500,
+    );
   }
 });
 
@@ -105,10 +127,17 @@ app.delete("/:locationId", async (c) => {
       },
     });
 
-    return c.json({ message: "location deleted" });
+    return c.json({
+      message: "location deleted",
+    });
   } catch (error) {
     console.log(error);
-    return c.json({ error: "Internal server error" }, 500);
+    return c.json(
+      {
+        error: "Internal server error",
+      },
+      500,
+    );
   }
 });
 
@@ -117,10 +146,17 @@ app.delete("/", async (c) => {
   try {
     await prisma.location.deleteMany();
 
-    return c.json({ message: "All location deleted" });
+    return c.json({
+      message: "All location deleted",
+    });
   } catch (error) {
     console.log(error);
-    return c.json({ error: "Internal server error" }, 500);
+    return c.json(
+      {
+        error: "Internal server error",
+      },
+      500,
+    );
   }
 });
 
@@ -141,13 +177,24 @@ app.put(
       });
 
       if (!location) {
-        return c.json({ message: "Location not exist" });
+        return c.json({
+          message: "Location not exist",
+        });
       }
 
-      return c.json(successResponse<Location>({ data: location }));
+      return c.json(
+        successResponse<Location>({
+          data: location,
+        }),
+      );
     } catch (error) {
       console.log(error);
-      return c.json({ error: "Internal server error" }, 500);
+      return c.json(
+        {
+          error: "Internal server error",
+        },
+        500,
+      );
     }
   },
 );

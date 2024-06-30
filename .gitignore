@@ -2,4 +2,4 @@
 .env.production
 
 # Biome
-../../../../../.dotfiles/biome/biome.json
+biome.json

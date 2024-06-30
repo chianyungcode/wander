@@ -9,6 +9,9 @@ export namespace OwnerValidation {
       .string()
       .min(8, { message: "Phone number must be at least 8 characters" }),
     address: z.string().min(1, { message: "Address cannot be empty" }),
+    city: z.string(),
+    country: z.string(),
+    postalCode: z.string(),
   });
 
   export const UPDATE = LocationValidation.CREATE.extend({
