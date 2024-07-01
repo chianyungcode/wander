@@ -1,6 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import type { Location } from "@prisma/client";
 import { Hono } from "hono";
+
 import prisma from "../lib/prisma";
 import type { LocationResponse } from "../model/location-model";
 import { successResponse } from "../utils/response";

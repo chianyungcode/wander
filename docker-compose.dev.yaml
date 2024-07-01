@@ -11,7 +11,7 @@ services:
       - APP_PORT=${APP_PORT}
     ports:
       - "${APP_PORT}:${APP_PORT}"
-    command: bun start
+    command: bun prod
     networks:
       - my-wander-network
     depends_on:
