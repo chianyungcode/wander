@@ -46,7 +46,6 @@ route.get("/", async (c) => {
 route.post("/", zValidator("json", CategoryValidation.CREATE), async (c) => {
   try {
     const validatedData = c.req.valid("json");
-
     const newCategory: Category = await prisma.category.create({
       data: validatedData,
     });

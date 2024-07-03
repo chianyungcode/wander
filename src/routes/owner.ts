@@ -33,7 +33,9 @@ route.get("/", zValidator("query", OwnerValidation.PAGINATION), async (c) => {
     const totalData = await prisma.owner.count();
 
     const owners = await prisma.owner.findMany(
-      {skip: (pageNumber - 1) * limitNumber, take: limitNumber, orderBy: {createdAt: "desc"}}
+      {skip: (pageNumber - 1) * limitNumber, take: limitNumber, orderBy: {createdAt: "desc"}, include: {
+        destinations: true,
+      }}
     );
 
     if (!owners) {
@@ -63,11 +65,14 @@ route.get("/", zValidator("query", OwnerValidation.PAGINATION), async (c) => {
 route.get("/:ownerId", async (c) => {
   try {
     const { ownerId } = c.req.param();
-
+    
     const owner = await prisma.owner.findFirst({
       where: {
         id: ownerId,
       },
+      include: {
+        destinations: true,
+      }
     });
 
     if (!owner) {
@@ -128,6 +133,9 @@ route.put("/:ownerId", zValidator("json", OwnerValidation.UPDATE), async (c) => 
         id: ownerId,
       },
       data: validatedData,
+      include: {
+        destinations: true,
+      }
     });
 
     if (!updatedOwner) {
