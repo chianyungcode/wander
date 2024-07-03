@@ -1,4 +1,4 @@
-# Category API Spec
+# Category API Documentation
 
 Full documentation for category API specification
 
@@ -10,6 +10,12 @@ Full documentation for category API specification
 | `/api/categories`     | `DELETE` | Delete all category   |
 | `/api/categories/:id` | `DELETE` | Delete category by id |
 | `/api/categories/:id` | `PUT`    | Update category by id |
+
+## Authentication Header
+
+| Parameter   | Description | Type   | Required |
+| ----------- | ----------- | ------ | -------- |
+| `X-API-KEY` | API key     | string | `Yes`    |
 
 ## Create Category
 

@@ -1,4 +1,4 @@
-# Destination API Spec
+# Destination API Documentation
 
 Full documentation for destination API spesification
 
@@ -13,6 +13,12 @@ Full documentation for destination API spesification
 | `/api/destinations`     | `DELETE` | Delete all destinations   |
 | `/api/destinations/:id` | `GET`    | Delete destination by id  |
 | `/api/destinations/:id` | `PUT`    | Update destination by id  |
+
+## Authentication Header
+
+| Parameter   | Description | Type   | Required |
+| ----------- | ----------- | ------ | -------- |
+| `X-API-KEY` | API key     | string | `Yes`    |
 
 ## Create Destination
 
@@ -136,40 +142,40 @@ GET /api/destinations
   "message": "success",
   "data": [
     {
-        "id" : "MJB5VOPOZG2UXYGWKP7JO",
-        "name" : "Wisata Snorking Gili",
-        "description" : "menjadi lebih menyatu alam",
-        "street" : "Jl Gili no 4",
-        "city" : "Gili Trawangan",
-        "province" : "East Nusa Tenggara",
-        "country" : "Indonesia",
-        "postalCode" : "41441",
-        "ticketPrice" : 300000,
-        "openHours" : "09.00",
-        "closeHours" : "17.00",
-        "categoryId" : "ZIGSW1QWFFKBRNSWXYCGQ",
-        "ownerId" : "HGCCSRB37PPH018USLCII",
-        "locationId" : "8RZQHBHACBSEAVJAIMGDP",
-        "createdAt": "2024-06-11T08:38:47.631Z",
-        "updatedAt": "2024-06-11T08:38:47.631Z"
+      "id": "MJB5VOPOZG2UXYGWKP7JO",
+      "name": "Wisata Snorking Gili",
+      "description": "menjadi lebih menyatu alam",
+      "street": "Jl Gili no 4",
+      "city": "Gili Trawangan",
+      "province": "East Nusa Tenggara",
+      "country": "Indonesia",
+      "postalCode": "41441",
+      "ticketPrice": 300000,
+      "openHours": "09.00",
+      "closeHours": "17.00",
+      "categoryId": "ZIGSW1QWFFKBRNSWXYCGQ",
+      "ownerId": "HGCCSRB37PPH018USLCII",
+      "locationId": "8RZQHBHACBSEAVJAIMGDP",
+      "createdAt": "2024-06-11T08:38:47.631Z",
+      "updatedAt": "2024-06-11T08:38:47.631Z"
     },
     {
-        "id" : "MJB5VOPOZCCSXYGWKP7DS",
-        "name" : "Wisata Snorking Gili",
-        "description" : "menjadi lebih menyatu alam",
-        "street" : "Jl Gili no 4",
-        "city" : "Gili Trawangan",
-        "province" : "East Nusa Tenggara",
-        "country" : "Indonesia",
-        "postalCode" : "41441",
-        "ticketPrice" : 300000,
-        "openHours" : "09.00",
-        "closeHours" : "17.00",
-        "categoryId" : "ZIGSW1QWFFKBRNSWXYCGQ",
-        "ownerId" : "HGCCSRB37PPH018USLCII",
-        "locationId" : "8RZQHBHACBSEAVJAIMGDP",
-        "createdAt": "2024-06-11T08:38:47.631Z",
-        "updatedAt": "2024-06-11T08:38:47.631Z"
+      "id": "MJB5VOPOZCCSXYGWKP7DS",
+      "name": "Wisata Snorking Gili",
+      "description": "menjadi lebih menyatu alam",
+      "street": "Jl Gili no 4",
+      "city": "Gili Trawangan",
+      "province": "East Nusa Tenggara",
+      "country": "Indonesia",
+      "postalCode": "41441",
+      "ticketPrice": 300000,
+      "openHours": "09.00",
+      "closeHours": "17.00",
+      "categoryId": "ZIGSW1QWFFKBRNSWXYCGQ",
+      "ownerId": "HGCCSRB37PPH018USLCII",
+      "locationId": "8RZQHBHACBSEAVJAIMGDP",
+      "createdAt": "2024-06-11T08:38:47.631Z",
+      "updatedAt": "2024-06-11T08:38:47.631Z"
     }
   ]
 }

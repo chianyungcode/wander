@@ -57,6 +57,40 @@ route.get("/:ownerId", async (c) => {
   }
 });
 
+// Delete owner by id
+route.delete("/:ownerId", async (c) => {
+  try {
+    const { ownerId } = c.req.param();
+
+    const owner = await prisma.owner.delete({
+      where: {
+        id: ownerId,
+      },
+    });
+
+    if (!owner) {
+      return c.json({ message: "Owner not found" });
+    }
+
+    return c.json(successResponse<Owner>({ data: owner }));
+  } catch (error) {
+    console.log(error);
+    return c.json({ error: "Internal server error" }, 500);
+  }
+});
+
+// Delete all owner
+route.delete("/", async (c) => {
+  try {
+    await prisma.owner.deleteMany();
+
+    return c.json({ message: "All owner deleted" });
+  } catch (error) {
+    console.log(error);
+    return c.json({ error: "Internal server error" }, 500);
+  }
+});
+
 // Update owner by id
 route.put("/:ownerId", zValidator("json", OwnerValidation.UPDATE), async (c) => {
   try {

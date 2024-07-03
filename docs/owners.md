@@ -11,6 +11,12 @@ Full documentation for owner API specifation
 | `/api/owners/:id` | `DELETE` | Delete owner by id |
 | `/api/owners/:id` | `PUT`    | Update owner by id |
 
+## Authentication Header
+
+| Parameter   | Description | Type   | Required |
+| ----------- | ----------- | ------ | -------- |
+| `X-API-KEY` | API key     | string | `Yes`    |
+
 ## Create owner
 
 Endpoint :

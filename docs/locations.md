@@ -1,4 +1,4 @@
-# Location API Spec
+# Location API Documentation
 
 Full documentation for location API spesification
 
@@ -13,6 +13,12 @@ Full documentation for location API spesification
 | `/api/locations`     | `DELETE` | Delete all destinations |
 | `/api/locations/:id` | `GET`    | Delete location by id   |
 | `/api/locations/:id` | `PUT`    | Update location by id   |
+
+## Authentication Header
+
+| Parameter   | Description | Type   | Required |
+| ----------- | ----------- | ------ | -------- |
+| `X-API-KEY` | API key     | string | `Yes`    |
 
 ## Create Location
 
