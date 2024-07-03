@@ -7,10 +7,10 @@ import prisma from "../lib/prisma";
 import { successResponse } from "../utils/response";
 import { DestinationValidation } from "../validation/destination-validation";
 
-const app = new Hono();
+const route = new Hono();
 
 // Get all destination
-app.get("/", async (c) => {
+route.get("/", async (c) => {
   try {
     const { page = "1", limit = "10" } = c.req.query();
     const pageNumber = Number.parseInt(page, 10);
@@ -41,7 +41,7 @@ app.get("/", async (c) => {
 });
 
 // Create destination
-app.post("/", zValidator("json", DestinationValidation.CREATE), async (c) => {
+route.post("/", zValidator("json", DestinationValidation.CREATE), async (c) => {
   try {
     const validatedData = c.req.valid("json");
 
@@ -57,7 +57,7 @@ app.post("/", zValidator("json", DestinationValidation.CREATE), async (c) => {
 });
 
 // Get destination
-app.get("/:id", async (c) => {
+route.get("/:id", async (c) => {
   try {
     const { id } = c.req.param();
 
@@ -79,7 +79,7 @@ app.get("/:id", async (c) => {
 });
 
 // Update destination
-app.put(
+route.put(
   "/:id",
   zValidator("json", DestinationValidation.UPDATE),
   zValidator("param", DestinationValidation.GET_ID),
@@ -113,7 +113,7 @@ app.put(
 );
 
 // Delete destination
-app.delete(
+route.delete(
   "/:id",
   zValidator("param", DestinationValidation.GET_ID),
   async (c) => {
@@ -141,7 +141,7 @@ app.delete(
 );
 
 // Delete all destination
-app.delete("/", async (c) => {
+route.delete("/", async (c) => {
   try {
     await prisma.destination.deleteMany();
 
@@ -154,7 +154,7 @@ app.delete("/", async (c) => {
 });
 
 // Upload image for destination
-app.post("/:id/upload", async (c) => {
+route.post("/:id/upload", async (c) => {
   try {
     const { id } = c.req.param();
     const body = await c.req.parseBody();
@@ -201,4 +201,4 @@ app.post("/:id/upload", async (c) => {
   }
 });
 
-export default app;
+export default route;

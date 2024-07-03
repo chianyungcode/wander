@@ -17,4 +17,4 @@ RUN bun install
 
 EXPOSE ${APP_PORT}
 
-CMD ["bun", "run", "prod"]
+CMD ["bun", "run", "start"]

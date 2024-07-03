@@ -47,6 +47,6 @@ app.route("api/owners", owners);
 app.route("api/categories", categories);
 
 export default {
-  port: process.env.APP_PORT,
+  port: process.env.APP_PORT || "3000",
   fetch: app.fetch,
 };

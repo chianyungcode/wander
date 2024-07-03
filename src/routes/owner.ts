@@ -5,10 +5,10 @@ import prisma from "../lib/prisma";
 import { successResponse } from "../utils/response";
 import { OwnerValidation } from "../validation/owner-validation";
 
-const app = new Hono();
+const route = new Hono();
 
 // Add new owner
-app.post("/", zValidator("json", OwnerValidation.CREATE), async (c) => {
+route.post("/", zValidator("json", OwnerValidation.CREATE), async (c) => {
   try {
     const validatedData = c.req.valid("json");
 
@@ -24,7 +24,7 @@ app.post("/", zValidator("json", OwnerValidation.CREATE), async (c) => {
 });
 
 // Get all owner data
-app.get("/", async (c) => {
+route.get("/", async (c) => {
   try {
     const owners = await prisma.owner.findMany();
 
@@ -36,7 +36,7 @@ app.get("/", async (c) => {
 });
 
 // Get owner by id
-app.get("/:ownerId", async (c) => {
+route.get("/:ownerId", async (c) => {
   try {
     const { ownerId } = c.req.param();
 
@@ -58,7 +58,7 @@ app.get("/:ownerId", async (c) => {
 });
 
 // Update owner by id
-app.put("/:ownerId", zValidator("json", OwnerValidation.UPDATE), async (c) => {
+route.put("/:ownerId", zValidator("json", OwnerValidation.UPDATE), async (c) => {
   try {
     const { ownerId } = c.req.param();
     const validatedData = c.req.valid("json");
@@ -81,4 +81,4 @@ app.put("/:ownerId", zValidator("json", OwnerValidation.UPDATE), async (c) => {
   }
 });
 
-export default app;
+export default route;

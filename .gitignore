@@ -1,4 +1,9 @@
+# depedencies
+node_modules/
+
+
 # Environment Variable
+.env
 .env.production
 
 # Biome

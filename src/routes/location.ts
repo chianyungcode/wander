@@ -7,10 +7,10 @@ import type { LocationResponse } from "../model/location-model";
 import { successResponse } from "../utils/response";
 import { LocationValidation } from "../validation/location-validation";
 
-const app = new Hono();
+const route = new Hono();
 
 // Get all locations
-app.get("/", zValidator("query", LocationValidation.PAGINATION), async (c) => {
+route.get("/", zValidator("query", LocationValidation.PAGINATION), async (c) => {
   try {
     const { page = "1", limit = "10", city } = c.req.valid("query");
     const pageNumber = Number.parseInt(page, 10);
@@ -57,7 +57,7 @@ app.get("/", zValidator("query", LocationValidation.PAGINATION), async (c) => {
 });
 
 // Create new location
-app.post("/", zValidator("json", LocationValidation.CREATE), async (c) => {
+route.post("/", zValidator("json", LocationValidation.CREATE), async (c) => {
   try {
     const validatedData = c.req.valid("json");
 
@@ -82,7 +82,7 @@ app.post("/", zValidator("json", LocationValidation.CREATE), async (c) => {
 });
 
 // Get location by id
-app.get("/:locationId", async (c) => {
+route.get("/:locationId", async (c) => {
   try {
     const { locationId } = c.req.param();
 
@@ -118,7 +118,7 @@ app.get("/:locationId", async (c) => {
 });
 
 // Delete location by id
-app.delete("/:locationId", async (c) => {
+route.delete("/:locationId", async (c) => {
   try {
     const { locationId } = c.req.param();
 
@@ -143,7 +143,7 @@ app.delete("/:locationId", async (c) => {
 });
 
 // Delete all locations
-app.delete("/", async (c) => {
+route.delete("/", async (c) => {
   try {
     await prisma.location.deleteMany();
 
@@ -162,7 +162,7 @@ app.delete("/", async (c) => {
 });
 
 // Update locaton
-app.put(
+route.put(
   "/:locationId",
   zValidator("json", LocationValidation.UPDATE),
   async (c) => {
@@ -200,4 +200,4 @@ app.put(
   },
 );
 
-export default app;
+export default route;

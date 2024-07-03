@@ -6,10 +6,10 @@ import prisma from "../lib/prisma";
 import { successResponse } from "../utils/response";
 import { CategoryValidation } from "../validation/category-validation";
 
-const app = new Hono();
+const route = new Hono();
 
 // Get all category
-app.get("/", async (c) => {
+route.get("/", async (c) => {
   try {
     const { page = "1", limit = "10" } = c.req.query();
     const pageNumber = Number.parseInt(page, 10);
@@ -40,7 +40,7 @@ app.get("/", async (c) => {
 });
 
 // Create new category
-app.post("/", zValidator("json", CategoryValidation.CREATE), async (c) => {
+route.post("/", zValidator("json", CategoryValidation.CREATE), async (c) => {
   try {
     const validatedData = c.req.valid("json");
 
@@ -61,7 +61,7 @@ app.post("/", zValidator("json", CategoryValidation.CREATE), async (c) => {
 });
 
 // Get category by id
-app.get(
+route.get(
   "/:categoryId",
   zValidator("param", CategoryValidation.GET_ID),
   async (c) => {
@@ -91,7 +91,7 @@ app.get(
 );
 
 // Update category by id
-app.put(
+route.put(
   "/:categoryId",
   zValidator("param", CategoryValidation.GET_ID),
   zValidator("json", CategoryValidation.UPDATE),
@@ -127,7 +127,7 @@ app.put(
   },
 );
 
-app.delete(
+route.delete(
   "/:categoryId",
   zValidator("param", CategoryValidation.GET_ID),
   async (c) => {
@@ -154,7 +154,7 @@ app.delete(
   },
 );
 
-app.delete("/", async (c) => {
+route.delete("/", async (c) => {
   try {
     await prisma.category.deleteMany();
 
@@ -165,4 +165,4 @@ app.delete("/", async (c) => {
   }
 });
 
-export default app;
+export default route;
