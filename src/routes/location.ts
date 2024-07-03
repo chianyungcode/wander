@@ -26,6 +26,9 @@ route.get("/", zValidator("query", LocationValidation.PAGINATION), async (c) => 
           search: city,
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      }
     });
 
     if (!locations) {

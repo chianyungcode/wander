@@ -1,5 +1,4 @@
-import { ZodType, z } from "zod";
-import { LocationValidation } from "./location-validation";
+import {  z } from "zod";
 
 export namespace OwnerValidation {
   export const CREATE = z.object({
@@ -14,9 +13,7 @@ export namespace OwnerValidation {
     postalCode: z.string(),
   });
 
-  export const UPDATE = LocationValidation.CREATE.extend({
-    id: z.string(),
-  });
+  export const UPDATE = OwnerValidation.CREATE
 
   export const DELETE = z.object({
     id: z.string(),
@@ -24,5 +21,10 @@ export namespace OwnerValidation {
 
   export const GET = z.object({
     id: z.string(),
+  });
+
+  export const PAGINATION = z.object({
+    page: z.string().optional(),
+    limit: z.string().optional(),
   });
 }

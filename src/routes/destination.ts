@@ -21,6 +21,9 @@ route.get("/", async (c) => {
     const destinations: Destination[] = await prisma.destination.findMany({
       skip: (pageNumber - 1) * limitNumber,
       take: limitNumber,
+      orderBy: {
+        createdAt: "desc",
+      }
     });
 
     return c.json(

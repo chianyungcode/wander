@@ -24,11 +24,35 @@ route.post("/", zValidator("json", OwnerValidation.CREATE), async (c) => {
 });
 
 // Get all owner data
-route.get("/", async (c) => {
+route.get("/", zValidator("query", OwnerValidation.PAGINATION), async (c) => {
   try {
-    const owners = await prisma.owner.findMany();
+    const { page = "1", limit = "10" } = c.req.valid("query");
+    const pageNumber = Number.parseInt(page, 10);
+    const limitNumber = Number.parseInt(limit, 10);
 
-    return c.json(successResponse<Owner[]>({ data: owners }));
+    const totalData = await prisma.owner.count();
+
+    const owners = await prisma.owner.findMany(
+      {skip: (pageNumber - 1) * limitNumber, take: limitNumber, orderBy: {createdAt: "desc"}}
+    );
+
+    if (!owners) {
+      return c.json({
+        message: "Owner not available",
+      });
+    }
+
+    const ownersResponse = successResponse<Owner[]>({
+      data: owners,
+      pagination: {
+        totalData,
+        page: pageNumber,
+        limit: limitNumber,
+        totalPages: Math.ceil(totalData / limitNumber),
+      },
+    });
+
+    return c.json(ownersResponse);
   } catch (error) {
     console.log(error);
     return c.json({ error: "Internal server error" }, 500);
@@ -72,7 +96,9 @@ route.delete("/:ownerId", async (c) => {
       return c.json({ message: "Owner not found" });
     }
 
-    return c.json(successResponse<Owner>({ data: owner }));
+    return c.json({
+      message: "Owner deleted",
+    });
   } catch (error) {
     console.log(error);
     return c.json({ error: "Internal server error" }, 500);

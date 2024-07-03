@@ -20,6 +20,9 @@ route.get("/", async (c) => {
     const categories: Category[] = await prisma.category.findMany({
       skip: (pageNumber - 1) * limitNumber,
       take: limitNumber,
+      orderBy: {
+        createdAt: "desc",
+      }
     });
 
     const categoriesResponse = successResponse<Category[]>({
